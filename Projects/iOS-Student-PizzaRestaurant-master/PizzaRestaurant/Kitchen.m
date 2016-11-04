@@ -36,7 +36,6 @@
         {
             chosen = PizzaSizeLarge;
         }
-        NSLog(@"UPGRADED!");
     }else{
         if([[input objectAtIndex:0] isEqualToString:@"small"])
         {
@@ -59,9 +58,18 @@
     
     if(shouldMake == TRUE)
     {
+        BOOL star = [self.delegate respondsToSelector:@selector(kitchenDidMakePizza:)];
         Pizza *new = [self makePizzaWithSize:chosen toppings: topp];
+        
+        if (star == TRUE)
+        {
+            [self.delegate kitchenDidMakePizza:new];
+        }
+        else{
+            NSLog(@"Created a Pizza with %@ on it", topp);
+        }
+        
         return new;
-        NSLog(@"Created a Pizza with %@ on it", topp);
     }
     
     return nil;

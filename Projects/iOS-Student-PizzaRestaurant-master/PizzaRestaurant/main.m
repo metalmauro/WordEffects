@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "Cashier.h"
 #import "Kitchen.h"
+#import "DeliveryService.h"
+#import "DeliveryCar.h"
+#import "Manager.h"
 
 int main(int argc, const char * argv[])
 {
@@ -18,8 +21,16 @@ int main(int argc, const char * argv[])
         NSLog(@"Please pick your pizza size and toppings:");
         
         Kitchen *restaurantKitchen = [Kitchen new];
-        Cashier *cash = [Cashier new];
-        restaurantKitchen.delegate = cash;
+//        Cashier *cash = [Cashier new];
+        Manager *mana = [Manager new];
+        DeliveryService *del = [DeliveryService new];
+        mana.delegate = del;
+        DeliveryCar *delC = [DeliveryCar new];
+        del.delegate = delC;
+        
+        
+//        restaurantKitchen.delegate = cash;
+        restaurantKitchen.delegate = mana;
         
         while (TRUE) {
             // Loop forever
@@ -40,10 +51,8 @@ int main(int argc, const char * argv[])
             
             // And then send some message to the kitchen...
             Pizza *new = [restaurantKitchen organizeInput:commandWords];
-            
-            
+            NSLog(@"%@",[del showDeliveredPizzas]);
         }
-
     }
     return 0;
 }
